@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: 'Apply vector Role'
+      include_role:
+        name: "{{ item }}"
+      loop:
+#        - clickhouse
+        - vector-role
