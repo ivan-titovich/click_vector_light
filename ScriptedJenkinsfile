@@ -1,0 +1,16 @@
+node("linux"){
+    def isProdRun = env.prod_run
+    stage("Git checkout"){
+        git credentialsId: '1886761a-cf53-417f-8f47-9259c3d1a684', url: 'git@github.com:ivan-titovich/click_vector_light.git'
+    }
+
+    if (isProdRun == 'true'){
+    stage("Run playbook with -check and --diff"){
+        sh 'ansible-playbook site.yml -i inventory/prod.yml --check --diff'
+        }
+    }
+    else{
+        stage("Run playbook without -check and --diff")
+        sh 'ansible-playbook site.yml -i inventory/prod.yml'
+        }
+    }
